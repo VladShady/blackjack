@@ -261,7 +261,7 @@ async function DealerScript() {
         toggleClass(double, "hide");
     }
 
-    while (DEALER["score"] < 16 && blackjackData["isStand"] === true) {
+    while (DEALER["score"] < 17 && blackjackData["isStand"] === true) {
         let card = randomNum();
         addCard(card, DEALER);
         setScore(card, DEALER);
