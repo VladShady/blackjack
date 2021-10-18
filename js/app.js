@@ -4,6 +4,7 @@ let blackjackData = {
     "cards": ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Q', 'K', 'J', 'A'],
     "cardsPoints": { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Q': 10, 'K': 10, 'J': 10, 'A': [1, 11] },
     "isStand": false,
+    // "IsRoundOver": false,
     "wins": 0,
     "losses": 0,
     "draws": 0,
@@ -268,6 +269,7 @@ async function DealerScript() {
         await wait(1000);
     }
 
+    // blackjackData["IsRoundOver"] = true;
     let winner = chooseWinner();
     showWinner(winner);
     toggleClass(new_round, "hide");
@@ -387,6 +389,7 @@ function resetInterface() {
     document.querySelector("#winner").innerText = "";
 
     blackjackData["isStand"] = false;
+    // blackjackData["IsRoundOver"] = false;
 
     toggleClass(table, "hide");
     toggleClass(deal, "hide");
@@ -425,6 +428,7 @@ function fullRestart() {
     document.querySelector("#wins__count").innerText = wins;
     document.querySelector("#losses__count").innerText = losses;
     document.querySelector("#draws__count").innerText = draws;
+    // blackjackData["IsRoundOver"] = false;
     currentBalance = 3000;
     document.getElementById("balance__money").innerText = currentBalance;
     toggleClass(modal, "hide");
