@@ -96,7 +96,7 @@ function setBalanceAndBet() {
 
 function addChipToBet(chipName) {
     let chipImg = document.createElement("img");
-    chipImg.src = `images/chips/${chipName}.png`;
+    chipImg.src = `images/chips/${chipName}.PNG`;
     chipImg.className = "bet__chips-item";
     chipImg.id = `bet__chip-${chipName}`;
 
