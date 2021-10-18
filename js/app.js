@@ -96,7 +96,7 @@ function setBalanceAndBet() {
 
 function addChipToBet(chipName) {
     let chipImg = document.createElement("img");
-    chipImg.src = `images/chips/${chipName}.PNG`;
+    chipImg.src = `images/Chips/${chipName}.png`;
     chipImg.className = "bet__chips-item";
     chipImg.id = `bet__chip-${chipName}`;
 
@@ -205,7 +205,7 @@ function Hit() {
 function addCard(card, activePlayer) {
     if (activePlayer["score"] <= 21) {
         let cardImg = document.createElement("img");
-        cardImg.src = `images/cards/${card}.png`;
+        cardImg.src = `images/Cards/${card}.png`;
         cardImg.className = "card__item";
 
         document.querySelector(activePlayer['div']).appendChild(cardImg);
