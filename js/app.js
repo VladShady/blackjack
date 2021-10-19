@@ -326,12 +326,16 @@ function showWinner(winner) {
 
 function Double() {
     if (blackjackData["isStand"] === false) {
-        currentBalance -= currentBet;
-        document.getElementById("balance__money").innerText = currentBalance;
-        currentBet *= 2;
-        document.getElementById("bet__num").innerText = currentBet;
-        Hit();
-        blackjackData["isStand"] = true;
+        if (currentBalance < currentBet) {
+            alert("Not enough money");
+        } else {
+            currentBalance -= currentBet;
+            document.getElementById("balance__money").innerText = currentBalance;
+            currentBet *= 2;
+            document.getElementById("bet__num").innerText = currentBet;
+            Hit();
+            blackjackData["isStand"] = true;
+        }
 
         if (!document.getElementById("double").className.includes("hide")) {
             toggleClass(double, "hide");
@@ -350,6 +354,37 @@ function resetScore() {
     document.querySelector(DEALER["scoreId"]).innerText = DEALER["score"];
     document.querySelector(DEALER["scoreId"]).style.color = "#ffffff";
     document.querySelector(DEALER["scoreId"]).style.fontWeight = "400";
+}
+
+function replaceChip() {
+    let chipImg = document.createElement("img");
+    let chipsRow = document.querySelector("#chips__row");
+    let chipName;
+    chipImg.className = "chips__item";
+
+    if (currentBalance >= 5000 && currentBalance < 10000) {
+        chipName = 500;
+
+        chipImg.id = `chip_${chipName}`;
+        chipImg.src = `./images/Chips/${chipName}.png`;
+        chipsRow.firstElementChild.remove();
+        chipsRow.appendChild(chipImg);
+
+        document.querySelector("#chip_500").addEventListener("click", function () {
+            addChipToBet(500);
+        });
+    } else if (currentBalance >= 10000) {
+        chipName = 1000;
+
+        chipImg.id = `chip_${chipName}`;
+        chipImg.src = `./images/Chips/${chipName}.png`;
+        chipsRow.firstElementChild.remove();
+        chipsRow.appendChild(chipImg);
+
+        document.querySelector("#chip_1000").addEventListener("click", function () {
+            addChipToBet(1000);
+        });
+    }
 }
 
 function updateBalance() {
@@ -385,6 +420,7 @@ function resetInterface() {
     resetScore();
     clearCards();
     clearBet();
+    replaceChip();
 
     document.querySelector("#winner").innerText = "";
 
