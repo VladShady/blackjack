@@ -30,6 +30,10 @@ document.querySelector("#deal").addEventListener("click", function () {
     Deal();
 });
 
+document.querySelector("#all_in").addEventListener("click", function () {
+    allIn();
+})
+
 document.querySelector("#double").addEventListener("click", function () {
     Double();
 });
@@ -167,6 +171,7 @@ function Deal() {
         toggleClass(table, "hide");
         toggleClass(deal, "hide");
         toggleClass(controls, "hide");
+        toggleClass(all_in, "hide");
 
         if (document.getElementById("hit").className.includes("hide")) {
             toggleClass(hit, "hide");
@@ -178,6 +183,13 @@ function Deal() {
     } else {
         alert("Place a bet first");
     }
+}
+
+function allIn() {
+    currentBet += currentBalance;
+    currentBalance = 0;
+
+    setBalanceAndBet();
 }
 
 let i = 0;
@@ -436,6 +448,10 @@ function resetInterface() {
     toggleClass(controls, "hide");
     toggleClass(stand, "hide");
     toggleClass(hit, "hide");
+
+    if (document.getElementById("double").className.includes("hide")) {
+        toggleClass(all_in, "hide");
+    }
 
     if (!document.getElementById("double").className.includes("hide")) {
         toggleClass(double, "hide");

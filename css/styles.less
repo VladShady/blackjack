@@ -78,9 +78,14 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
     z-index: 1000;
 
+    display: flex;
+    flex-wrap: wrap;
+
     transition: background-color 0.2s linear;
 
     &--deal {
+        display: flex;
+        justify-content: center;
         font-size: 55px;
         font-weight: 700;
         color: #000000;
@@ -90,6 +95,26 @@ h1, h2, h3, h4, h5, h6 {
         border-radius: 50px;
 
         padding: 5px 100px;
+        margin-bottom: 20px;
+
+        &.hide {
+            display: none;
+        }
+    }
+
+    &--all_in {
+        display: flex;
+        justify-content: center;
+        font-size: 45px;
+        font-weight: 700;
+        color: #000000;
+        background-color: #bcbcbc;
+
+        border: 2px solid #000000;
+        border-radius: 50px;
+
+        padding: 5px 40px;
+        width: 220px;
 
         &.hide {
             display: none;
