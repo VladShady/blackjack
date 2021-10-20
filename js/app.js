@@ -362,7 +362,7 @@ function replaceChip() {
     let chipName;
     chipImg.className = "chips__item";
 
-    if (currentBalance >= 5000 && currentBalance < 10000) {
+    if (currentBalance >= 5000 && currentBalance < 10000 && !document.querySelector("#chip_500")) {
         chipName = 500;
 
         chipImg.id = `chip_${chipName}`;
@@ -373,7 +373,7 @@ function replaceChip() {
         document.querySelector("#chip_500").addEventListener("click", function () {
             addChipToBet(500);
         });
-    } else if (currentBalance >= 10000) {
+    } else if (currentBalance >= 10000 && !document.querySelector("#chip_1000")) {
         chipName = 1000;
 
         chipImg.id = `chip_${chipName}`;
@@ -389,7 +389,11 @@ function replaceChip() {
 
 function updateBalance() {
     if (chooseWinner() === YOU) {
-        currentBalance += currentBet * 2;
+        if (YOU["score"] === 21) {
+            currentBalance += currentBet * 2.5;
+        } else {
+            currentBalance += currentBet * 2;
+        }
     } else if (chooseWinner() === undefined) {
         currentBalance += currentBet;
     }
