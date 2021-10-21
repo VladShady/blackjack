@@ -251,6 +251,12 @@ function showScore(activePlayer) {
         document.querySelector(activePlayer["scoreId"]).innerText = activePlayer["score"];
         document.querySelector(activePlayer["scoreId"]).style.color = "#4e9e00";
         document.querySelector(activePlayer["scoreId"]).style.fontWeight = "700";
+
+        if (!document.getElementById("hit").className.includes("hide")) {
+            toggleClass(hit, "hide");
+        }
+
+        toggleClass(double, "hide");
     }
     else {
         document.querySelector(activePlayer["scoreId"]).innerText = activePlayer["score"];
@@ -352,6 +358,10 @@ function Double() {
         if (!document.getElementById("double").className.includes("hide")) {
             toggleClass(double, "hide");
         }
+
+        if (!document.getElementById("hit").className.includes("hide")) {
+            toggleClass(hit, "hide");
+        }
     }
 }
 
@@ -368,36 +378,74 @@ function resetScore() {
     document.querySelector(DEALER["scoreId"]).style.fontWeight = "400";
 }
 
+function restoreChips() {
+
+    if (currentBalance < 30000 && document.querySelector("#chip_5000")) {
+        document.querySelector("#chip_5000").remove();
+
+        toggleClass(chip_10, "hide");
+    }
+
+
+    if (currentBalance < 10000 && document.querySelector("#chip_1000")) {
+        document.querySelector("#chip_1000").remove();
+
+        toggleClass(chip_5, "hide");
+    }
+
+    if (currentBalance < 5000 && document.querySelector("#chip_500")) {
+        document.querySelector("#chip_500").remove();
+
+        toggleClass(chip_1, "hide");
+    }
+}
+
+
+
 function replaceChip() {
     let chipImg = document.createElement("img");
     let chipsRow = document.querySelector("#chips__row");
     let chipName;
     chipImg.className = "chips__item";
 
+    restoreChips();
+
     if (currentBalance >= 5000 && currentBalance < 10000 && !document.querySelector("#chip_500")) {
         chipName = 500;
 
         chipImg.id = `chip_${chipName}`;
         chipImg.src = `./images/Chips/${chipName}.png`;
-        chipsRow.firstElementChild.remove();
+        toggleClass(chip_1, "hide");
         chipsRow.appendChild(chipImg);
 
         document.querySelector("#chip_500").addEventListener("click", function () {
             addChipToBet(500);
         });
-    } else if (currentBalance >= 10000 && !document.querySelector("#chip_1000")) {
+    } else if (currentBalance >= 10000 && currentBalance < 30000 && !document.querySelector("#chip_1000")) {
         chipName = 1000;
 
         chipImg.id = `chip_${chipName}`;
         chipImg.src = `./images/Chips/${chipName}.png`;
-        chipsRow.firstElementChild.remove();
+        toggleClass(chip_5, "hide");
         chipsRow.appendChild(chipImg);
 
         document.querySelector("#chip_1000").addEventListener("click", function () {
             addChipToBet(1000);
         });
+    } else if (currentBalance >= 30000 && !document.querySelector("#chip_5000")) {
+        chipName = 5000;
+
+        chipImg.id = `chip_${chipName}`;
+        chipImg.src = `./images/Chips/${chipName}.png`;
+        toggleClass(chip_10, "hide");
+        chipsRow.appendChild(chipImg);
+
+        document.querySelector("#chip_5000").addEventListener("click", function () {
+            addChipToBet(5000);
+        });
     }
 }
+
 
 function updateBalance() {
     if (chooseWinner() === YOU) {
@@ -409,6 +457,8 @@ function updateBalance() {
     } else if (chooseWinner() === undefined) {
         currentBalance += currentBet;
     }
+
+    currentBalance = Math.round(currentBalance);
 
     document.getElementById("balance__money").innerText = currentBalance;
 }
@@ -513,11 +563,17 @@ function fullRestart() {
         toggleClass(deal, "hide");
     }
 
+    if (document.getElementById("all_in").className.includes("hide")) {
+        toggleClass(all_in, "hide");
+    }
+
     if (!document.getElementById("controls").className.includes("hide")) {
         toggleClass(controls, "hide");
     }
 
     i = 0;
+
+    restoreChips();
 }
 
 
