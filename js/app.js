@@ -254,11 +254,9 @@ function showScore(activePlayer) {
 
         if (!document.getElementById("hit").className.includes("hide")) {
             toggleClass(hit, "hide");
+            toggleClass(double, "hide");
         }
-
-        toggleClass(double, "hide");
-    }
-    else {
+    } else {
         document.querySelector(activePlayer["scoreId"]).innerText = activePlayer["score"];
     }
 }
@@ -357,10 +355,6 @@ function Double() {
 
         if (!document.getElementById("double").className.includes("hide")) {
             toggleClass(double, "hide");
-        }
-
-        if (!document.getElementById("hit").className.includes("hide")) {
-            toggleClass(hit, "hide");
         }
     }
 }
