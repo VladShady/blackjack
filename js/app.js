@@ -4,7 +4,7 @@ let blackjackData = {
     "cards": ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Q', 'K', 'J', 'A'],
     "cardsPoints": { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Q': 10, 'K': 10, 'J': 10, 'A': [1, 11] },
     "isStand": false,
-    // "IsRoundOver": false,
+    "isDealerPlaying": false,
     "wins": 0,
     "losses": 0,
     "draws": 0,
@@ -129,30 +129,21 @@ function addChipToBet(chipName) {
                     chip.remove();
                 }
 
-                if (currentBet < 1) {
-                    if (document.querySelector("#bet__chip-1")) {
-                        document.querySelector("#bet__chip-1").remove();
-                    }
+                if (currentBet < 1 && document.querySelector("#bet__chip-1")) {
+                    document.querySelector("#bet__chip-1").remove();
                 }
-                if (currentBet < 5) {
-                    if (document.querySelector("#bet__chip-5")) {
-                        document.querySelector("#bet__chip-5").remove();
-                    }
+                if (currentBet < 5 && document.querySelector("#bet__chip-5")) {
+                    document.querySelector("#bet__chip-5").remove();
                 }
-                if (currentBet < 10) {
-                    if (document.querySelector("#bet__chip-10")) {
-                        document.querySelector("#bet__chip-10").remove();
-                    }
+                if (currentBet < 10 && document.querySelector("#bet__chip-10")) {
+                    document.querySelector("#bet__chip-10").remove();
                 }
-                if (currentBet < 25) {
-                    if (document.querySelector("#bet__chip-25")) {
-                        document.querySelector("#bet__chip-25").remove();
-                    }
+                if (currentBet < 25 && document.querySelector("#bet__chip-25")) {
+                    document.querySelector("#bet__chip-25").remove();
+
                 }
-                if (currentBet < 100) {
-                    if (document.querySelector("#bet__chip-100")) {
-                        document.querySelector("#bet__chip-100").remove();
-                    }
+                if (currentBet < 100 && document.querySelector("#bet__chip-100")) {
+                    document.querySelector("#bet__chip-100").remove();
                 }
             }
 
@@ -202,7 +193,7 @@ function Hit() {
         showScore(YOU);
 
         i++;
-        if (i === 2) {
+        if (i === 2 && YOU["score"] != 21) {
             toggleClass(double, "hide");
         } else if (i > 2) {
             i = undefined;
@@ -220,7 +211,7 @@ function addCard(card, activePlayer) {
         cardImg.src = `./images/Cards/${card}.png`;
         cardImg.className = "card__item";
 
-        document.querySelector(activePlayer['div']).appendChild(cardImg);
+        document.querySelector(activePlayer["div"]).appendChild(cardImg);
     }
 }
 
@@ -254,7 +245,6 @@ function showScore(activePlayer) {
 
         if (!document.getElementById("hit").className.includes("hide")) {
             toggleClass(hit, "hide");
-            toggleClass(double, "hide");
         }
     } else {
         document.querySelector(activePlayer["scoreId"]).innerText = activePlayer["score"];
@@ -267,6 +257,7 @@ function wait(ms) {
 
 async function DealerScript() {
     blackjackData["isStand"] = true;
+    blackjackData["isDealerPlaying"] = true;
 
     toggleClass(stand, "hide");
     if (!document.getElementById("hit").className.includes("hide")) {
@@ -285,10 +276,10 @@ async function DealerScript() {
         await wait(1000);
     }
 
-    // blackjackData["IsRoundOver"] = true;
     let winner = chooseWinner();
     showWinner(winner);
     toggleClass(new_round, "hide");
+    blackjackData["isDealerPlaying"] = false;
 }
 
 function chooseWinner() {
@@ -355,6 +346,10 @@ function Double() {
 
         if (!document.getElementById("double").className.includes("hide")) {
             toggleClass(double, "hide");
+        }
+
+        if (!document.getElementById("hit").className.includes("hide")) {
+            toggleClass(hit, "hide");
         }
     }
 }
@@ -485,7 +480,6 @@ function resetInterface() {
     document.querySelector("#winner").innerText = "";
 
     blackjackData["isStand"] = false;
-    // blackjackData["IsRoundOver"] = false;
 
     toggleClass(table, "hide");
     toggleClass(deal, "hide");
@@ -509,65 +503,63 @@ function resetInterface() {
 }
 
 function fullRestart() {
-    resetScore();
-    clearCards();
-    clearBet();
+    if (blackjackData["isDealerPlaying"] === false) {
 
-    document.querySelector("#winner").innerText = "";
+        resetScore();
+        clearCards();
+        clearBet();
 
-    // setTimeout(function () {
-    //     document.querySelector("#winner").innerText = "";
-    // }, 1000);
+        document.querySelector("#winner").innerText = "";
 
-    blackjackData["isStand"] = false;
+        blackjackData["isStand"] = false;
 
-    wins = 0;
-    losses = 0;
-    draws = 0;
+        wins = 0;
+        losses = 0;
+        draws = 0;
 
-    document.querySelector("#wins__count").innerText = wins;
-    document.querySelector("#losses__count").innerText = losses;
-    document.querySelector("#draws__count").innerText = draws;
-    // blackjackData["IsRoundOver"] = false;
-    currentBalance = 3000;
-    document.getElementById("balance__money").innerText = currentBalance;
-    toggleClass(modal, "hide");
+        document.querySelector("#wins__count").innerText = wins;
+        document.querySelector("#losses__count").innerText = losses;
+        document.querySelector("#draws__count").innerText = draws;
+        currentBalance = 3000;
+        document.getElementById("balance__money").innerText = currentBalance;
+        toggleClass(modal, "hide");
 
-    if (!document.getElementById("hit").className.includes("hide")) {
-        toggleClass(hit, "hide");
+        if (!document.getElementById("hit").className.includes("hide")) {
+            toggleClass(hit, "hide");
+        }
+
+        if (!document.getElementById("stand").className.includes("hide")) {
+            toggleClass(stand, "hide");
+        }
+
+        if (!document.getElementById("double").className.includes("hide")) {
+            toggleClass(double, "hide");
+        }
+
+        if (!document.getElementById("new_round").className.includes("hide")) {
+            toggleClass(new_round, "hide");
+        }
+
+        if (document.getElementById("table").className.includes("hide")) {
+            toggleClass(table, "hide");
+        }
+
+        if (document.getElementById("deal").className.includes("hide")) {
+            toggleClass(deal, "hide");
+        }
+
+        if (document.getElementById("all_in").className.includes("hide")) {
+            toggleClass(all_in, "hide");
+        }
+
+        if (!document.getElementById("controls").className.includes("hide")) {
+            toggleClass(controls, "hide");
+        }
+
+        i = 0;
+
+        restoreChips();
     }
-
-    if (!document.getElementById("stand").className.includes("hide")) {
-        toggleClass(stand, "hide");
-    }
-
-    if (!document.getElementById("double").className.includes("hide")) {
-        toggleClass(double, "hide");
-    }
-
-    if (!document.getElementById("new_round").className.includes("hide")) {
-        toggleClass(new_round, "hide");
-    }
-
-    if (document.getElementById("table").className.includes("hide")) {
-        toggleClass(table, "hide");
-    }
-
-    if (document.getElementById("deal").className.includes("hide")) {
-        toggleClass(deal, "hide");
-    }
-
-    if (document.getElementById("all_in").className.includes("hide")) {
-        toggleClass(all_in, "hide");
-    }
-
-    if (!document.getElementById("controls").className.includes("hide")) {
-        toggleClass(controls, "hide");
-    }
-
-    i = 0;
-
-    restoreChips();
 }
 
 
