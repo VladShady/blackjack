@@ -140,10 +140,18 @@ function addChipToBet(chipName) {
                 }
                 if (currentBet < 25 && document.querySelector("#bet__chip-25")) {
                     document.querySelector("#bet__chip-25").remove();
-
                 }
                 if (currentBet < 100 && document.querySelector("#bet__chip-100")) {
                     document.querySelector("#bet__chip-100").remove();
+                }
+                if (currentBet < 500 && document.querySelector("#bet__chip-500")) {
+                    document.querySelector("#bet__chip-500").remove();
+                }
+                if (currentBet < 1000 && document.querySelector("#bet__chip-1000")) {
+                    document.querySelector("#bet__chip-1000").remove();
+                }
+                if (currentBet < 5000 && document.querySelector("#bet__chip-5000")) {
+                    document.querySelector("#bet__chip-5000").remove();
                 }
             }
 
@@ -177,8 +185,15 @@ function Deal() {
 }
 
 function allIn() {
-    currentBet += currentBalance;
-    currentBalance = 0;
+    if (currentBalance === 0 && currentBet != 0) {
+        currentBalance += currentBet;
+        currentBet = 0;
+        document.querySelector("#all_in").innerText = "All in";
+    } else if (currentBalance != 0) {
+        currentBet += currentBalance;
+        currentBalance = 0;
+        document.querySelector("#all_in").innerText = "Undo";
+    }
 
     setBalanceAndBet();
 }
@@ -342,14 +357,14 @@ function Double() {
             document.getElementById("bet__num").innerText = currentBet;
             Hit();
             blackjackData["isStand"] = true;
+
+            if (!document.getElementById("hit").className.includes("hide")) {
+                toggleClass(hit, "hide");
+            }
         }
 
         if (!document.getElementById("double").className.includes("hide")) {
             toggleClass(double, "hide");
-        }
-
-        if (!document.getElementById("hit").className.includes("hide")) {
-            toggleClass(hit, "hide");
         }
     }
 }
@@ -478,6 +493,7 @@ function resetInterface() {
     replaceChip();
 
     document.querySelector("#winner").innerText = "";
+    document.querySelector("#all_in").innerText = "All in";
 
     blackjackData["isStand"] = false;
 
@@ -510,6 +526,7 @@ function fullRestart() {
         clearBet();
 
         document.querySelector("#winner").innerText = "";
+        document.querySelector("#all_in").innerText = "All in";
 
         blackjackData["isStand"] = false;
 
