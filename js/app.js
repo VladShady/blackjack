@@ -27,6 +27,7 @@ document.querySelector("#draws__count").innerText = localStorage.getItem("draws"
 
 let currentBalance = parseInt(document.getElementById("balance__money").innerText);
 let currentBet = parseInt(document.getElementById("bet__num").innerText);
+
 let wins = parseInt(localStorage.getItem("wins"));
 let losses = parseInt(localStorage.getItem("losses"));
 let draws = parseInt(localStorage.getItem("draws"));
@@ -142,34 +143,23 @@ function addChipToBet(chipName) {
                     chip.remove();
                 }
 
-                if (currentBet < 1 && document.querySelector("#bet__chip-1")) {
-                    document.querySelector("#bet__chip-1").remove();
-                }
-                if (currentBet < 5 && document.querySelector("#bet__chip-5")) {
-                    document.querySelector("#bet__chip-5").remove();
-                }
-                if (currentBet < 10 && document.querySelector("#bet__chip-10")) {
-                    document.querySelector("#bet__chip-10").remove();
-                }
-                if (currentBet < 25 && document.querySelector("#bet__chip-25")) {
-                    document.querySelector("#bet__chip-25").remove();
-                }
-                if (currentBet < 100 && document.querySelector("#bet__chip-100")) {
-                    document.querySelector("#bet__chip-100").remove();
-                }
-                if (currentBet < 500 && document.querySelector("#bet__chip-500")) {
-                    document.querySelector("#bet__chip-500").remove();
-                }
-                if (currentBet < 1000 && document.querySelector("#bet__chip-1000")) {
-                    document.querySelector("#bet__chip-1000").remove();
-                }
-                if (currentBet < 5000 && document.querySelector("#bet__chip-5000")) {
-                    document.querySelector("#bet__chip-5000").remove();
-                }
+                removeChip(1);
+                removeChip(5);
+                removeChip(10);
+                removeChip(25);
+                removeChip(100);
+                removeChip(500);
+                removeChip(1000);
+                removeChip(5000);
             }
-
             setBalanceAndBet();
         }
+    }
+}
+
+function removeChip(chipNum) {
+    if (currentBet < chipNum && document.querySelector(`#bet__chip-${chipNum}`)) {
+        document.querySelector(`#bet__chip-${chipNum}`).remove();
     }
 }
 
