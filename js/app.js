@@ -15,12 +15,25 @@ const DEALER = blackjackData["dealer"];
 const CARDS = blackjackData["cards"];
 const POINTS = blackjackData["cardsPoints"];
 
-let wins = blackjackData["wins"];
-let losses = blackjackData["losses"];
-let draws = blackjackData["draws"];
+let winsNum = blackjackData["wins"];
+let lossesNum = blackjackData["losses"];
+let drawsNum = blackjackData["draws"];
+
+document.querySelector("#balance__money").innerText = localStorage.getItem("balance");
+
+document.querySelector("#wins__count").innerText = localStorage.getItem("wins");
+document.querySelector("#losses__count").innerText = localStorage.getItem("losses");
+document.querySelector("#draws__count").innerText = localStorage.getItem("draws");
 
 let currentBalance = parseInt(document.getElementById("balance__money").innerText);
 let currentBet = parseInt(document.getElementById("bet__num").innerText);
+let wins = parseInt(localStorage.getItem("wins"));
+let losses = parseInt(localStorage.getItem("losses"));
+let draws = parseInt(localStorage.getItem("draws"));
+
+checkChips(500, 5000, chip_1);
+checkChips(1000, 10000, chip_5);
+checkChips(5000, 30000, chip_10);
 
 document.querySelector("#menu").addEventListener("click", function () {
     toggleClass(modal, "hide");
@@ -327,20 +340,25 @@ function showWinner(winner) {
         messageColor = "#4e9e00";
 
         wins += 1;
-        document.querySelector("#wins__count").innerText = wins;
     } else if (winner === DEALER) {
         message = "You lost!";
         messageColor = "red";
 
         losses += 1;
-        document.querySelector("#losses__count").innerText = losses;
     } else {
         message = "Draw!";
         messageColor = "#ffffff";
 
         draws += 1;
-        document.querySelector("#draws__count").innerText = draws;
     }
+
+    localStorage.setItem("wins", wins);
+    localStorage.setItem("losses", losses);
+    localStorage.setItem("draws", draws);
+
+    document.querySelector("#wins__count").innerText = localStorage.getItem("wins");
+    document.querySelector("#losses__count").innerText = localStorage.getItem("losses");
+    document.querySelector("#draws__count").innerText = localStorage.getItem("draws");
 
     document.querySelector("#winner").innerText = message;
     document.querySelector("#winner").style.color = messageColor;
@@ -404,50 +422,29 @@ function restoreChips() {
     }
 }
 
-
-
-function replaceChip() {
+function checkChips(chipname, balanceLvl, chipToRemove) {
     let chipImg = document.createElement("img");
     let chipsRow = document.querySelector("#chips__row");
-    let chipName;
     chipImg.className = "chips__item";
 
-    restoreChips();
-
-    if (currentBalance >= 5000 && currentBalance < 10000 && !document.querySelector("#chip_500")) {
-        chipName = 500;
-
-        chipImg.id = `chip_${chipName}`;
-        chipImg.src = `./images/Chips/${chipName}.png`;
-        toggleClass(chip_1, "hide");
+    if (currentBalance >= balanceLvl && !document.querySelector(`#chip_${chipname}`)) {
+        chipImg.id = `chip_${chipname}`;
+        chipImg.src = `./images/Chips/${chipname}.png`;
+        toggleClass(chipToRemove, "hide");
         chipsRow.appendChild(chipImg);
 
-        document.querySelector("#chip_500").addEventListener("click", function () {
-            addChipToBet(500);
-        });
-    } else if (currentBalance >= 10000 && currentBalance < 30000 && !document.querySelector("#chip_1000")) {
-        chipName = 1000;
-
-        chipImg.id = `chip_${chipName}`;
-        chipImg.src = `./images/Chips/${chipName}.png`;
-        toggleClass(chip_5, "hide");
-        chipsRow.appendChild(chipImg);
-
-        document.querySelector("#chip_1000").addEventListener("click", function () {
-            addChipToBet(1000);
-        });
-    } else if (currentBalance >= 30000 && !document.querySelector("#chip_5000")) {
-        chipName = 5000;
-
-        chipImg.id = `chip_${chipName}`;
-        chipImg.src = `./images/Chips/${chipName}.png`;
-        toggleClass(chip_10, "hide");
-        chipsRow.appendChild(chipImg);
-
-        document.querySelector("#chip_5000").addEventListener("click", function () {
-            addChipToBet(5000);
+        document.querySelector(`#chip_${chipname}`).addEventListener("click", function () {
+            addChipToBet(chipname);
         });
     }
+}
+
+function replaceChip() {
+    restoreChips();
+
+    checkChips(500, 5000, chip_1);
+    checkChips(1000, 10000, chip_5);
+    checkChips(5000, 30000, chip_10);
 }
 
 
@@ -465,6 +462,7 @@ function updateBalance() {
     currentBalance = Math.round(currentBalance);
 
     document.getElementById("balance__money").innerText = currentBalance;
+    localStorage.setItem("balance", currentBalance);
 }
 
 function clearBet() {
@@ -537,7 +535,12 @@ function fullRestart() {
         document.querySelector("#wins__count").innerText = wins;
         document.querySelector("#losses__count").innerText = losses;
         document.querySelector("#draws__count").innerText = draws;
-        currentBalance = 3000;
+        // currentBalance = 3000;
+        localStorage.setItem("balance", 3000);
+        localStorage.setItem("wins", 0);
+        localStorage.setItem("losses", 0);
+        localStorage.setItem("draws", 0);
+
         document.getElementById("balance__money").innerText = currentBalance;
         toggleClass(modal, "hide");
 
@@ -576,6 +579,7 @@ function fullRestart() {
         i = 0;
 
         restoreChips();
+        location.reload();
     }
 }
 
