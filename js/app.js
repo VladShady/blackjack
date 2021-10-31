@@ -19,6 +19,16 @@ let winsNum = blackjackData["wins"];
 let lossesNum = blackjackData["losses"];
 let drawsNum = blackjackData["draws"];
 
+window.onload = function () {
+    if (localStorage.getItem("hasCodeRunBefore") === null) {
+        localStorage.setItem("balance", 3000);
+        localStorage.setItem("wins", 0);
+        localStorage.setItem("losses", 0);
+        localStorage.setItem("draws", 0);
+        localStorage.setItem("hasCodeRunBefore", true);
+    }
+}
+
 document.querySelector("#balance__money").innerText = localStorage.getItem("balance");
 
 document.querySelector("#wins__count").innerText = localStorage.getItem("wins");
