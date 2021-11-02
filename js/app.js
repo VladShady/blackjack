@@ -25,6 +25,7 @@ window.onload = function () {
         localStorage.setItem("wins", 0);
         localStorage.setItem("losses", 0);
         localStorage.setItem("draws", 0);
+        fullRestart();
         localStorage.setItem("hasCodeRunBefore", true);
     }
 }
