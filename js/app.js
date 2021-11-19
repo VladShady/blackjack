@@ -536,7 +536,6 @@ function fullRestart() {
         document.querySelector("#wins__count").innerText = wins;
         document.querySelector("#losses__count").innerText = losses;
         document.querySelector("#draws__count").innerText = draws;
-        // currentBalance = 3000;
         localStorage.setItem("balance", 3000);
         localStorage.setItem("wins", 0);
         localStorage.setItem("losses", 0);
