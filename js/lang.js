@@ -14,7 +14,7 @@ const ENG = {
     restart: "Restart",
     stats: "Stats",
     you: "You",
-    balance: "Balance",
+    balance: "Balance:",
     dealer: "Dealer",
 }
 
@@ -34,6 +34,6 @@ const UA = {
     restart: "Рестарт",
     stats: "Статистика",
     you: "Ви",
-    balance: "Рахунок",
+    balance: "Рахунок:",
     dealer: "Ділер",
 }
