@@ -1,10 +1,15 @@
 // compress: true
 
+@white: #ffffff;
+@black: #000000;
+@light-gray: #bcbcbc;
+@dark-gray: #858585;
+
 body {
     margin: 0;
     font-family: 'Merriweather', serif;
     font-size: 15px;
-    color: #ffffff;
+    color: @white;
 
     background: url("../images/background.jpg") center no-repeat;
     background-size: cover;
@@ -52,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .bet__text {
     font-size: 55px;
-    color: #ffffff;
+    color: @white;
 }
 
 .bet__chips {
@@ -89,13 +94,13 @@ h1, h2, h3, h4, h5, h6 {
         justify-content: center;
         font-size: 55px;
         font-weight: 700;
-        color: #000000;
-        background-color: #bcbcbc;
+        color: @black;
+        background-color: @light-gray;
 
-        border: 2px solid #000000;
+        border: 2px solid @black;
         border-radius: 50px;
 
-        padding: 5px 100px;
+        padding: 5px 80px;
         margin-bottom: 20px;
 
         &.hide {
@@ -108,10 +113,10 @@ h1, h2, h3, h4, h5, h6 {
         justify-content: center;
         font-size: 45px;
         font-weight: 700;
-        color: #000000;
-        background-color: #bcbcbc;
+        color: @black;
+        background-color: @light-gray;
 
-        border: 2px solid #000000;
+        border: 2px solid @black;
         border-radius: 50px;
 
         padding: 5px 40px;
@@ -128,10 +133,10 @@ h1, h2, h3, h4, h5, h6 {
         justify-content: center;
         font-size: 55px;
         font-weight: 700;
-        color: #000000;
-        background-color: #bcbcbc;
+        color: @black;
+        background-color: @light-gray;
 
-        border: 2px solid #000000;
+        border: 2px solid @black;
         border-radius: 50px;
 
         padding-top: 5px;
@@ -150,7 +155,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     &:hover {
-        background-color: #858585;
+        background-color: @dark-gray;
     }
 
 }
@@ -211,13 +216,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .balance__text {
     font-size: 55px;
-    color: #ffffff;
+    color: @white;
 }
 
 .balance__money {
     font-size: 30px;
 
-    color: #ffffff;
+    color: @white;
     background-color: rgba(0, 0, 0, 0.3);
 
     border-radius: 100px;
@@ -271,12 +276,12 @@ h1, h2, h3, h4, h5, h6 {
     
     font-size: 45px;
     text-decoration: none;
-    color: #ffffff;
+    color: @white;
 
     transition: color 0.2s linear;
 
     &:hover {
-        color: #bcbcbc;
+        color: @light-gray;
     }
 }
 
@@ -285,7 +290,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 10px;
     right: 10px;
     font-size: 30px;
-    color: #ffffff;
+    color: @white;
 
     &.hide {
         display: none;
@@ -341,7 +346,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 15px;
     overflow: auto;
 
-    background-color: fade(#000000, 90%);
+    background-color: fade(@black, 90%);
 
     position: fixed;
     top: 0;
@@ -354,6 +359,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal__dialog {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -372,7 +378,7 @@ h1, h2, h3, h4, h5, h6 {
     
     font-size: 55px;
     font-weight: 700;
-    color: #ffffff;
+    color: @white;
     text-align: center;
 
     margin-bottom: 50px;
@@ -384,12 +390,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal__item {
-    font-size: 55px;
+    font-size: 50px;
     font-weight: 700;
-    color: #000000;
-    background-color: #bcbcbc;
+    color: @black;
+    background-color: @light-gray;
 
-    border: 2px solid #000000;
+    border: 2px solid @black;
     border-radius: 50px;
 
     cursor: pointer;
@@ -400,7 +406,31 @@ h1, h2, h3, h4, h5, h6 {
     transition: background-color 0.2s linear;
 
     &:hover {
-        background-color: #858585;
+        background-color: @dark-gray;
+    }
+}
+
+.modal__lang {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.lang__item {
+    font-size: 25px;
+    text-align: right;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    &.active {
+        color: @dark-gray;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 

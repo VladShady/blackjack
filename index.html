@@ -25,13 +25,13 @@
 
         <div class="stats hide" id="stats">
             <div class="wins">
-                Wins: <span id="wins__count"></span>
+                <span id="wins">Wins</span>: <span id="wins__count"></span>
             </div>
             <div class="losses">
-                Losses: <span id="losses__count"></span>
+                <span id="losses">Losses</span>: <span id="losses__count"></span>
             </div>
             <div class="draws">
-                Draws: <span id="draws__count"></span>
+                <span id="draws">Draws</span>: <span id="draws__count"></span>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
         </div>
 
         <div class="bet">
-            <div class="bet__text">Bet: $<span id="bet__num">0</span></div>
+            <div class="bet__text"><span id="bet__title">Bet</span>: $<span id="bet__num">0</span></div>
             <div class="bet__chips" id="bet__chips">
 
             </div>
@@ -92,7 +92,11 @@
                 <div class="modal__items">
                     <div class="modal__item" id="resume">Resume</div>
                     <div class="modal__item" id="restart">Restart</div>
-                    <div class="modal__item" id="show_stats"><span id="toggle_show-hide">Show</span> stats</div>
+                    <div class="modal__item" id="show_stats">Stats</div>
+                </div>
+                <div class="modal__lang">
+                    <div class="lang__item" id="lang_eng">Eng</div>
+                    <div class="lang__item" id="lang_ua">Ua</div>
                 </div>
             </div>
         </div>
@@ -101,12 +105,12 @@
     <div class="table" id="table">
 
         <div class="table__main-info">
-            <div class="player__text">You: <span id="player__score">0</span></div>
+            <div class="player__text"><span id="player__title">You</span>: <span id="player__score">0</span></div>
             <div class="balance">
                 <span class="balance__text">Balance:</span>
                 <span class="balance__money">$<span id="balance__money"></span></span>
             </div>
-            <div class="dealer__text">Dealer: <span id="dealer__score">0</span></div>
+            <div class="dealer__text"><span id="dealer__title">Dealer</span>: <span id="dealer__score">0</span></div>
         </div>
 
         <div class="chips">
@@ -121,6 +125,7 @@
 
     </div>
 
+    <script src="js/lang.js"></script>
     <script src="js/app.js"></script>
 
 </body>

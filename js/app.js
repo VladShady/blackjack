@@ -27,6 +27,16 @@ window.onload = function () {
         localStorage.setItem("draws", 0);
         fullRestart();
         localStorage.setItem("hasCodeRunBefore", true);
+
+        localStorage.setItem("Language", "ENG");
+    }
+
+    setLang();
+
+    if (localStorage.getItem("Language") == "ENG" && !document.querySelector("#lang_eng").className.includes("active")) {
+        toggleClass(lang_eng, "active");
+    } else {
+        toggleClass(lang_ua, "active");
     }
 }
 
@@ -36,8 +46,8 @@ document.querySelector("#wins__count").innerText = localStorage.getItem("wins");
 document.querySelector("#losses__count").innerText = localStorage.getItem("losses");
 document.querySelector("#draws__count").innerText = localStorage.getItem("draws");
 
-let currentBalance = parseInt(document.getElementById("balance__money").innerText);
-let currentBet = parseInt(document.getElementById("bet__num").innerText);
+let currentBalance = parseInt(document.querySelector("#balance__money").innerText);
+let currentBet = parseInt(document.querySelector("#bet__num").innerText);
 
 let wins = parseInt(localStorage.getItem("wins"));
 let losses = parseInt(localStorage.getItem("losses"));
@@ -87,11 +97,14 @@ document.querySelector("#show_stats").addEventListener("click", function () {
     toggleClass(stats, "hide");
     toggleClass(modal, "hide");
 
-    if (!document.querySelector("#stats").className.includes("hide")) {
-        document.querySelector("#toggle_show-hide").innerText = "Hide";
-    } else {
-        document.querySelector("#toggle_show-hide").innerText = "Show";
-    }
+
+    // if (localStorage.getItem("Language") == "ENG") {
+    //     if (!document.querySelector("#stats").className.includes("hide")) {
+    //         document.querySelector("#toggle_show-hide").innerText = "Hide";
+    //     } else {
+    //         document.querySelector("#toggle_show-hide").innerText = "Show";
+    //     }
+    // }
 });
 
 document.querySelector("#chip_1").addEventListener("click", function () {
@@ -114,13 +127,73 @@ document.querySelector("#chip_100").addEventListener("click", function () {
     addChipToBet(100);
 });
 
+document.querySelector("#lang_ua").addEventListener("click", function () {
+    localStorage.setItem("Language", "UA");
+    if (!document.querySelector("#lang_ua").className.includes("active")) {
+        toggleClass(lang_ua, "active");
+        toggleClass(lang_eng, "active");
+    }
+    setLang();
+});
+
+document.querySelector("#lang_eng").addEventListener("click", function () {
+    localStorage.setItem("Language", "ENG");
+    if (!document.querySelector("#lang_eng").className.includes("active")) {
+        toggleClass(lang_ua, "active");
+        toggleClass(lang_eng, "active");
+    }
+    setLang();
+});
+
 function toggleClass(element, yourClass) {
     element.classList.toggle(yourClass);
 }
 
+function setLang() {
+    if (localStorage.getItem("Language") == "UA") {
+        document.querySelector("#menu").innerText = UA.menu;
+        document.querySelector("#wins").innerText = UA.wins;
+        document.querySelector("#losses").innerText = UA.losses;
+        document.querySelector("#draws").innerText = UA.draws;
+        document.querySelector("#bet__title").innerText = UA.bet;
+        document.querySelector("#deal").innerText = UA.deal;
+        document.querySelector("#all_in").innerText = UA.allIn;
+        document.querySelector("#double").innerText = UA.double;
+        document.querySelector("#hit").innerText = UA.hit;
+        document.querySelector("#stand").innerText = UA.stand;
+        document.querySelector("#new_round").innerText = UA.newRound;
+        document.querySelector(".modal__title").innerText = UA.menu;
+        document.querySelector("#resume").innerText = UA.resume;
+        document.querySelector("#restart").innerText = UA.restart;
+        document.querySelector("#show_stats").innerText = UA.stats;
+        document.querySelector("#player__title").innerText = UA.you;
+        document.querySelector(".balance__text").innerText = UA.balance;
+        document.querySelector("#dealer__title").innerText = UA.dealer;
+    } else {
+        document.querySelector("#menu").innerText = ENG.menu;
+        document.querySelector("#wins").innerText = ENG.wins;
+        document.querySelector("#losses").innerText = ENG.losses;
+        document.querySelector("#draws").innerText = ENG.draws;
+        document.querySelector("#bet__title").innerText = ENG.bet;
+        document.querySelector("#deal").innerText = ENG.deal;
+        document.querySelector("#all_in").innerText = ENG.allIn;
+        document.querySelector("#double").innerText = ENG.double;
+        document.querySelector("#hit").innerText = ENG.hit;
+        document.querySelector("#stand").innerText = ENG.stand;
+        document.querySelector("#new_round").innerText = ENG.newRound;
+        document.querySelector(".modal__title").innerText = ENG.menu;
+        document.querySelector("#resume").innerText = ENG.resume;
+        document.querySelector("#restart").innerText = ENG.restart;
+        document.querySelector("#show_stats").innerText = ENG.stats;
+        document.querySelector("#player__title").innerText = ENG.you;
+        document.querySelector(".balance__text").innerText = ENG.balance;
+        document.querySelector("#dealer__title").innerText = ENG.dealer;
+    }
+}
+
 function setBalanceAndBet() {
-    document.getElementById("bet__num").innerText = currentBet;
-    document.getElementById("balance__money").innerText = currentBalance;
+    document.querySelector("#bet__num").innerText = currentBet;
+    document.querySelector("#balance__money").innerText = currentBalance;
 }
 
 function addChipToBet(chipName) {
@@ -186,11 +259,11 @@ function Deal() {
         toggleClass(controls, "hide");
         toggleClass(all_in, "hide");
 
-        if (document.getElementById("hit").className.includes("hide")) {
+        if (document.querySelector("#hit").className.includes("hide")) {
             toggleClass(hit, "hide");
         }
 
-        if (document.getElementById("stand").className.includes("hide")) {
+        if (document.querySelector("#stand").className.includes("hide")) {
             toggleClass(stand, "hide");
         }
     } else {
@@ -202,11 +275,19 @@ function allIn() {
     if (currentBalance === 0 && currentBet != 0) {
         currentBalance += currentBet;
         currentBet = 0;
-        document.querySelector("#all_in").innerText = "All in";
+        if (localStorage.getItem("Language") == "ENG") {
+            document.querySelector("#all_in").innerText = "All in";
+        } else {
+            document.querySelector("#all_in").innerText = "Все";
+        }
     } else if (currentBalance != 0) {
         currentBet += currentBalance;
         currentBalance = 0;
-        document.querySelector("#all_in").innerText = "Undo";
+        if (localStorage.getItem("Language") == "ENG") {
+            document.querySelector("#all_in").innerText = "Undo";
+        } else {
+            document.querySelector("#all_in").innerText = "Назад";
+        }
     }
 
     setBalanceAndBet();
@@ -227,7 +308,7 @@ function Hit() {
         } else if (i > 2) {
             i = undefined;
 
-            if (!document.getElementById("double").className.includes("hide")) {
+            if (!document.querySelector("#double").className.includes("hide")) {
                 toggleClass(double, "hide");
             }
         }
@@ -264,7 +345,7 @@ function showScore(activePlayer) {
         document.querySelector(activePlayer["scoreId"]).style.color = "red";
         document.querySelector(activePlayer["scoreId"]).style.fontWeight = "700";
 
-        if (!document.getElementById("hit").className.includes("hide")) {
+        if (!document.querySelector("#hit").className.includes("hide")) {
             toggleClass(hit, "hide");
         }
     } else if (activePlayer["score"] == 21) {
@@ -272,7 +353,7 @@ function showScore(activePlayer) {
         document.querySelector(activePlayer["scoreId"]).style.color = "#4e9e00";
         document.querySelector(activePlayer["scoreId"]).style.fontWeight = "700";
 
-        if (!document.getElementById("hit").className.includes("hide")) {
+        if (!document.querySelector("#hit").className.includes("hide")) {
             toggleClass(hit, "hide");
         }
     } else {
@@ -289,11 +370,11 @@ async function DealerScript() {
     blackjackData["isDealerPlaying"] = true;
 
     toggleClass(stand, "hide");
-    if (!document.getElementById("hit").className.includes("hide")) {
+    if (!document.querySelector("#hit").className.includes("hide")) {
         toggleClass(hit, "hide");
     }
 
-    if (!document.getElementById("double").className.includes("hide")) {
+    if (!document.querySelector("#double").className.includes("hide")) {
         toggleClass(double, "hide");
     }
 
@@ -321,13 +402,19 @@ function chooseWinner() {
         } else if (YOU["score"] < DEALER["score"]) {
             winner = DEALER;
         } else if (YOU["score"] === DEALER["score"]) {
-            winner = undefined;
+            if (YOU["score"] === 21 && DEALER["score"] === 21) {
+                if (document.querySelector("#dealer__row").childElementCount === 2 && document.querySelector("#player__row").childElementCount !== 2) {
+                    winner = DEALER;
+                } else {
+                    winner = YOU;
+                }
+            } else {
+                winner = undefined;
+            }
         }
 
-    } else if (YOU["score"] > 21 && DEALER["score"] <= 21) {
+    } else if (YOU["score"] > 21) {
         winner = DEALER;
-    } else if (YOU["score"] > 21 && DEALER["score"] > 21) {
-        winner = undefined;
     }
 
     return winner;
@@ -337,17 +424,29 @@ function showWinner(winner) {
     let message, messageColor;
 
     if (winner === YOU) {
-        message = "You won!";
+        if (localStorage.getItem("Language") == "ENG") {
+            message = "You won!";
+        } else {
+            message = "Перемога!";
+        }
         messageColor = "#4e9e00";
 
         wins += 1;
     } else if (winner === DEALER) {
-        message = "You lost!";
+        if (localStorage.getItem("Language") == "ENG") {
+            message = "You lost!";
+        } else {
+            message = "Ви програли!";
+        }
         messageColor = "red";
 
         losses += 1;
     } else {
-        message = "Draw!";
+        if (localStorage.getItem("Language") == "ENG") {
+            message = "Draw!";
+        } else {
+            message = "Нічия!";
+        }
         messageColor = "#ffffff";
 
         draws += 1;
@@ -371,18 +470,18 @@ function Double() {
             alert("Not enough money");
         } else {
             currentBalance -= currentBet;
-            document.getElementById("balance__money").innerText = currentBalance;
+            document.querySelector("#balance__money").innerText = currentBalance;
             currentBet *= 2;
-            document.getElementById("bet__num").innerText = currentBet;
+            document.querySelector("#bet__num").innerText = currentBet;
             Hit();
             blackjackData["isStand"] = true;
 
-            if (!document.getElementById("hit").className.includes("hide")) {
+            if (!document.querySelector("#hit").className.includes("hide")) {
                 toggleClass(hit, "hide");
             }
         }
 
-        if (!document.getElementById("double").className.includes("hide")) {
+        if (!document.querySelector("#double").className.includes("hide")) {
             toggleClass(double, "hide");
         }
     }
@@ -451,7 +550,7 @@ function replaceChip() {
 
 function updateBalance() {
     if (chooseWinner() === YOU) {
-        if (YOU["score"] === 21) {
+        if (YOU["score"] === 21 && document.querySelector("#player__row").childElementCount === 2) {
             currentBalance += currentBet * 2.5;
         } else {
             currentBalance += currentBet * 2;
@@ -462,7 +561,7 @@ function updateBalance() {
 
     currentBalance = Math.round(currentBalance);
 
-    document.getElementById("balance__money").innerText = currentBalance;
+    document.querySelector("#balance__money").innerText = currentBalance;
     localStorage.setItem("balance", currentBalance);
 }
 
@@ -473,7 +572,7 @@ function clearBet() {
     };
 
     currentBet = 0;
-    document.getElementById("bet__num").innerText = currentBet;
+    document.querySelector("#bet__num").innerText = currentBet;
 }
 
 function clearCards() {
@@ -492,7 +591,11 @@ function resetInterface() {
     replaceChip();
 
     document.querySelector("#winner").innerText = "";
-    document.querySelector("#all_in").innerText = "All in";
+    if (localStorage.getItem("Language") == "ENG") {
+        document.querySelector("#all_in").innerText = ENG.allIn;
+    } else {
+        document.querySelector("#all_in").innerText = UA.allIn;
+    }
 
     blackjackData["isStand"] = false;
 
@@ -502,15 +605,15 @@ function resetInterface() {
     toggleClass(stand, "hide");
     toggleClass(hit, "hide");
 
-    if (document.getElementById("double").className.includes("hide")) {
+    if (document.querySelector("#double").className.includes("hide")) {
         toggleClass(all_in, "hide");
     }
 
-    if (!document.getElementById("double").className.includes("hide")) {
+    if (!document.querySelector("#double").className.includes("hide")) {
         toggleClass(double, "hide");
     }
 
-    if (!document.getElementById("new_round").className.includes("hide")) {
+    if (!document.querySelector("#new_round").className.includes("hide")) {
         toggleClass(new_round, "hide");
     }
 
@@ -525,7 +628,11 @@ function fullRestart() {
         clearBet();
 
         document.querySelector("#winner").innerText = "";
-        document.querySelector("#all_in").innerText = "All in";
+        if (localStorage.getItem("Language") == "ENG") {
+            document.querySelector("#all_in").innerText = ENG.allIn;
+        } else {
+            document.querySelector("#all_in").innerText = UA.allIn;
+        }
 
         blackjackData["isStand"] = false;
 
@@ -541,44 +648,45 @@ function fullRestart() {
         localStorage.setItem("losses", 0);
         localStorage.setItem("draws", 0);
 
-        document.getElementById("balance__money").innerText = currentBalance;
+        document.querySelector("#balance__money").innerText = currentBalance;
         toggleClass(modal, "hide");
 
-        if (!document.getElementById("hit").className.includes("hide")) {
+        if (!document.querySelector("#hit").className.includes("hide")) {
             toggleClass(hit, "hide");
         }
 
-        if (!document.getElementById("stand").className.includes("hide")) {
+        if (!document.querySelector("#stand").className.includes("hide")) {
             toggleClass(stand, "hide");
         }
 
-        if (!document.getElementById("double").className.includes("hide")) {
+        if (!document.querySelector("#double").className.includes("hide")) {
             toggleClass(double, "hide");
         }
 
-        if (!document.getElementById("new_round").className.includes("hide")) {
+        if (!document.querySelector("#new_round").className.includes("hide")) {
             toggleClass(new_round, "hide");
         }
 
-        if (document.getElementById("table").className.includes("hide")) {
+        if (document.querySelector("#table").className.includes("hide")) {
             toggleClass(table, "hide");
         }
 
-        if (document.getElementById("deal").className.includes("hide")) {
+        if (document.querySelector("#deal").className.includes("hide")) {
             toggleClass(deal, "hide");
         }
 
-        if (document.getElementById("all_in").className.includes("hide")) {
+        if (document.querySelector("#all_in").className.includes("hide")) {
             toggleClass(all_in, "hide");
         }
 
-        if (!document.getElementById("controls").className.includes("hide")) {
+        if (!document.querySelector("#controls").className.includes("hide")) {
             toggleClass(controls, "hide");
         }
 
         i = 0;
 
         restoreChips();
+        setLang();
         location.reload();
     }
 }
