@@ -96,15 +96,6 @@ document.querySelector("#restart").addEventListener("click", function () {
 document.querySelector("#show_stats").addEventListener("click", function () {
     toggleClass(stats, "hide");
     toggleClass(modal, "hide");
-
-
-    // if (localStorage.getItem("Language") == "ENG") {
-    //     if (!document.querySelector("#stats").className.includes("hide")) {
-    //         document.querySelector("#toggle_show-hide").innerText = "Hide";
-    //     } else {
-    //         document.querySelector("#toggle_show-hide").innerText = "Show";
-    //     }
-    // }
 });
 
 document.querySelector("#chip_1").addEventListener("click", function () {
