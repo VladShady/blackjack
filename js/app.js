@@ -149,10 +149,10 @@ function setLang() {
         document.querySelector("#bet__title").innerText = UA.bet;
         document.querySelector("#deal").innerText = UA.deal;
         document.querySelector("#all_in").innerText = UA.allIn;
-        document.querySelector("#double").innerText = UA.double;
-        document.querySelector("#hit").innerText = UA.hit;
-        document.querySelector("#stand").innerText = UA.stand;
-        document.querySelector("#new_round").innerText = UA.newRound;
+        document.querySelector("#double__text").innerText = UA.double;
+        document.querySelector("#hit__text").innerText = UA.hit;
+        document.querySelector("#stand__text").innerText = UA.stand;
+        document.querySelector("#new-round__text").innerText = UA.newRound;
         document.querySelector(".modal__title").innerText = UA.menu;
         document.querySelector("#resume").innerText = UA.resume;
         document.querySelector("#restart").innerText = UA.restart;
@@ -168,10 +168,10 @@ function setLang() {
         document.querySelector("#bet__title").innerText = ENG.bet;
         document.querySelector("#deal").innerText = ENG.deal;
         document.querySelector("#all_in").innerText = ENG.allIn;
-        document.querySelector("#double").innerText = ENG.double;
-        document.querySelector("#hit").innerText = ENG.hit;
-        document.querySelector("#stand").innerText = ENG.stand;
-        document.querySelector("#new_round").innerText = ENG.newRound;
+        document.querySelector("#double__text").innerText = ENG.double;
+        document.querySelector("#hit__text").innerText = ENG.hit;
+        document.querySelector("#stand__text").innerText = ENG.stand;
+        document.querySelector("#new-round__text").innerText = ENG.newRound;
         document.querySelector(".modal__title").innerText = ENG.menu;
         document.querySelector("#resume").innerText = ENG.resume;
         document.querySelector("#restart").innerText = ENG.restart;
@@ -201,7 +201,11 @@ function addChipToBet(chipName) {
             document.querySelector("#bet__chips").appendChild(chipImg);
         }
     } else {
-        alert("Not enough money");
+        if (localStorage.getItem("Language") == "ENG") {
+            alert("Not enough money");
+        } else {
+            alert("Недостатньо грошей на рахунку");
+        }
     }
 
     setBalanceAndBet();
@@ -258,7 +262,11 @@ function Deal() {
             toggleClass(stand, "hide");
         }
     } else {
-        alert("Place a bet first");
+        if (localStorage.getItem("Language") == "ENG") {
+            alert("Place a bet first");
+        } else {
+            alert("Спочатку зробіть ставку");
+        }
     }
 }
 
@@ -458,7 +466,11 @@ function showWinner(winner) {
 function Double() {
     if (blackjackData["isStand"] === false) {
         if (currentBalance < currentBet) {
-            alert("Not enough money");
+            if (localStorage.getItem("Language") == "ENG") {
+                alert("Not enough money");
+            } else {
+                alert("Недостатньо грошей на рахунку");
+            }
         } else {
             currentBalance -= currentBet;
             document.querySelector("#balance__money").innerText = currentBalance;
